@@ -160,12 +160,14 @@ directory '/var/opt/delivery' do
   action :create
 end
 
-user 'dbuild' do
-  comment 'User for delivery build node'
-  uid '7100'
-  gid 'users'
-  home '/var/opt/delivery/workspace'
-  shell '/bin/bash'
+unless node['delivery_build']['linux_user_based_ldap']
+  user node['delivery_build']['user'] do
+    comment 'User for delivery build node'
+    uid node['delivery_build']['uid']
+    gid node['delivery_build']['gid']
+    home node['delivery_build']['home']
+    shell '/bin/bash'
+  end
 end
 
 %w(bin etc lib).each do |dir|

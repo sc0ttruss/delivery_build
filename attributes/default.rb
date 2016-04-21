@@ -14,7 +14,8 @@ default['delivery_build']['packages']['runit'] ='runit-2.1.2-3.el7.centos.x86_64
 # add the delivery local user on the box
 # but allow it to be skipped if already created
 # in Linux based logins connected to ldap
-default['delivery_build']['linux_user_ldap'] = false
+default['delivery_build']['linux_user_based_ldap'] = false
 default['delivery_build']['user'] = 'dbuild'
 default['delivery_build']['uid'] = '7100'
 default['delivery_build']['gid'] = 'users'
+default['delivery_build']['home'] = '/var/opt/delivery/workspace'
