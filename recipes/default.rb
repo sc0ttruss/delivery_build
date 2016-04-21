@@ -22,63 +22,7 @@ end # Loop
 package 'git' do
   action :install
 end
-#
-# remote_file '/var/tmp/chefdk-0.12.0-1.el7.x86_64.rpm' do
-#   source 'file:///mnt/share/chef/chefdk-0.12.0-1.el7.x86_64.rpm'
-#   owner 'root'
-#   group 'root'
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
-# remote_file '/var/tmp/delivery-cli-20160317163950-1.el6.x86_64.rpm' do
-#   source 'file:///mnt/share/chef/delivery-cli-20160317163950-1.el6.x86_64.rpm'
-#   owner 'root'
-#   group 'root'
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
-# remote_file '/var/tmp/push-jobs-client-1.3.4-1.el7.x86_64.rpm' do
-#   source 'file:///mnt/share/chef/push-jobs-client-1.3.4-1.el7.x86_64.rpm'
-#   owner 'root'
-#   group 'root'
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
-# remote_file '/var/tmp/runit-2.1.2-3.el7.centos.x86_64.rpm' do
-#   source 'file:///mnt/share/chef/runit-2.1.2-3.el7.centos.x86_64.rpm'
-#   owner 'root'
-#   group 'root'
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
-# package 'chefdk' do
-#   source '/var/tmp/chefdk-0.12.0-1.el7.x86_64.rpm'
-#   action :install
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
-# package 'delvery-cli' do
-#   source '/var/tmp/delivery-cli-20160317163950-1.el6.x86_64.rpm'
-#   action :install
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
-# package 'opscode-push-jobs-client' do
-#   source '/var/tmp/push-jobs-client-1.3.4-1.el7.x86_64.rpm'
-#   action :install
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
-# package 'git' do
-#   action :install
-# end
-#
-# package 'runit' do
-#   source '/var/tmp/runit-2.1.2-3.el7.centos.x86_64.rpm'
-#   action :install
-#   only_if { node['delivery_build']['source_files']['exist'] }
-# end
-#
+
 # this is required in case node is not already bootstrapped
 
 directory '/etc/chef' do
