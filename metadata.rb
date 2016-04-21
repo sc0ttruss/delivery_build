@@ -1,0 +1,7 @@
+name 'delivery_build'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures delivery_build'
+long_description 'Installs/Configures delivery_build'
+version '0.1.0'
