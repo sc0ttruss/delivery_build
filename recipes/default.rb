@@ -264,8 +264,8 @@ bash 'copy across the Delivery and Supermarket SSL certificates' do
   user 'root'
   cwd '/var/tmp'
   code <<-EOH
-  openssl s_client -showcerts -connect google.co.uk:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/delivery.myorg.chefdemo.net
-  openssl s_client -showcerts -connect google.co.uk:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/supermarket.myorg.chefdemo.net
+  openssl s_client -showcerts -connect #{node['delivery_build']['delivery_url']}:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/#{node['delivery_build']['delivery_url']}
+  openssl s_client -showcerts -connect #{node['delivery_build']['builder_url']}:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/#{node['delivery_build']['builder_url']}
   EOH
 end
 
