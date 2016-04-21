@@ -5,7 +5,7 @@
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
 # Loop through packages (in recipe)
-node['delivery_build']['packages'].each do |name,versioned_name|
+node['delivery_build']['packages'].each do |name, versioned_name|
   unless node['delivery_build']['use_package_manager']
     remote_file "/var/tmp/#{versioned_name}" do
       source "#{node['delivery_build']['base_package_url']}/#{versioned_name}"
@@ -17,7 +17,7 @@ node['delivery_build']['packages'].each do |name,versioned_name|
     end
     action :install
   end
-end #Loop
+end # Loop
 
 package 'git' do
   action :install
@@ -88,7 +88,6 @@ directory '/etc/chef' do
   recursive true
   action :create
 end
-
 
 template '/etc/chef/push-jobs-client.rb' do
   source 'push-jobs-client.erb'
@@ -197,18 +196,18 @@ end
 
 # Lay down the builder credentials
 
-remote_file '/var/opt/delivery/workspace/etc/delivery.pem' do
+remote_file "/var/opt/delivery/workspace/etc/#{node['delivery_build']['delivery_user_private_key']}" do
   # source 'http://myfile'
-  source 'file:///mnt/share/chef/delivery.pem'
+  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['delivery_user_private_key']}"
   owner 'dbuild'
   group 'root'
   mode 00644
   # checksum 'abc123'
 end
 
-remote_file '/var/opt/delivery/workspace/.chef/delivery.pem' do
+remote_file "/var/opt/delivery/workspace/.chef/#{node['delivery_build']['delivery_user_private_key']}" do
   # source 'http://myfile'
-  source 'file:///mnt/share/chef/delivery.pem'
+  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['delivery_user_private_key']}"
   owner 'dbuild'
   group 'root'
   mode 00644
@@ -216,20 +215,20 @@ remote_file '/var/opt/delivery/workspace/.chef/delivery.pem' do
 end
 
 # Copy the builder SSH private key generated on the delivery server
-#  during creation of the enterprise to the following locations
+# during creation of the enterprise to the following locations
 
-remote_file '/var/opt/delivery/workspace/etc/builder_key' do
+remote_file "/var/opt/delivery/workspace/etc/#{node['delivery_build']['builder_user_private_key']}" do
   # source 'http://myfile'
-  source 'file:///mnt/share/chef/builder_key'
+  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['builder_user_private_key']}"
   owner 'dbuild'
   group 'root'
   mode 00644
   # checksum 'abc123'
 end
 
-remote_file '/var/opt/delivery/workspace/.chef/builder_key' do
+remote_file "/var/opt/delivery/workspace/.chef/#{node['delivery_build']['builder_user_private_key']}" do
   # source 'http://myfile'
-  source 'file:///mnt/share/chef/builder_key'
+  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['builder_user_private_key']}"
   owner 'dbuild'
   group 'root'
   mode 00644

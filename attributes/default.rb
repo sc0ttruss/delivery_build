@@ -19,3 +19,7 @@ default['delivery_build']['user'] = 'dbuild'
 default['delivery_build']['uid'] = '7100'
 default['delivery_build']['gid'] = 'users'
 default['delivery_build']['home'] = '/var/opt/delivery/workspace'
+# Load up the builder private ssh key and the chef delivery user's pem key
+default['delivery_build']['base_filename_url'] = 'file:///mnt/share/chef/'
+default['delivery_build']['delivery_user_private_key'] = 'delivery.pem'
+default['delivery_build']['builder_user_private_key'] = 'builder_key'
