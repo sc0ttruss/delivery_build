@@ -26,7 +26,7 @@ default['delivery_build']['builder_user_private_key'] = 'builder_key'
 
 # Delivery and SUpermarket URL's to retrieve their certificates
 default['delivery_build']['delivery_url'] = 'google.co.uk'
-default['delivery_build']['builder_url'] = 'google.co.uk'
+default['delivery_build']['supermarket_url'] = 'google.co.uk'
 # this specifically targets the /etc/chef/push-jobs-client.rb file
 default['delivery_build']['chef_server_url'] = 'https://chef.myorg.chefdemo.net/organizations/myorg'
 default['delivery_build']['builder_node_url'] = 'builder1.myorg.chefdemo.net'
