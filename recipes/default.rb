@@ -209,7 +209,7 @@ bash 'copy across the Delivery and Supermarket SSL certificates' do
   cwd '/var/tmp'
   code <<-EOH
   openssl s_client -showcerts -connect #{node['delivery_build']['delivery_url']}:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/#{node['delivery_build']['delivery_url']}
-  openssl s_client -showcerts -connect #{node['delivery_build']['supermarket_url']}:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/#{node['delivery_build']['builder_url']}
+  openssl s_client -showcerts -connect #{node['delivery_build']['supermarket_url']}:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/#{node['delivery_build']['supermarket_url']}
   EOH
 end
 
