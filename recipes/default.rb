@@ -42,7 +42,7 @@ end
 
 # Create a runit configuration to start Push Jobs daemon
 
-%w(log env control).each do |dir|
+%w(log/main env control).each do |dir|
   directory "/etc/sv/opscode-push-jobs-client/#{dir}" do
     mode '0755'
     owner 'root'
@@ -52,14 +52,23 @@ end
   end
 end
 
-%w(main config).each do |dir|
-  directory "/etc/sv/opscode-push-jobs-client/log/#{dir}" do
-    mode '0755'
-    owner 'root'
-    group 'root'
-    action :create
-    recursive true
-  end
+directory "/var/log/opscode-push-jobs-client" do
+  mode '0755'
+  owner 'root'
+  group 'root'
+  recursive true
+  action :create
+end
+
+file "/etc/sv/opscode-push-jobs-client/log/config" do
+  mode '0644'
+  owner 'root'
+  group 'root'
+  action :create
+end
+
+link "/var/log/opscode-push-jobs-client/config" do
+  to "/etc/sv/opscode-push-jobs-client/log/config"
 end
 
 # Create a script /etc/sv/opscode-push-jobs-client/run with 755 permissions
