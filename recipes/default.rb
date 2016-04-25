@@ -178,17 +178,32 @@ end
 # Grab all the required "TRUSTED" certs. These are mainly self signed certs
 # andcerts which are signed using modern CA's that haven't made it into common
 # Linux distros yet.
-require "mixlib/shellout"
+require 'httpclient'
+http_client=HTTPClient.new
+http_client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
 node.delivery_build.trusted_certs.each do |fqdn|
-  showcerts = Mixlib::ShellOut.new("openssl s_client -showcerts -connect #{fqdn}:443 </dev/null 2> /dev/null | openssl x509 -outform PEM")
-  showcerts.run_command
+  response=http_client.get("https://#{fqdn}")
+  pem=response.peer_cert.to_pem
+  #Drop the ert in trusted certs
   file "/etc/chef/trusted_certs/#{fqdn}.crt" do
-    content showcerts.stdout.chomp
+    content pem
     owner 'root'
     group 'root'
     mode '0644'
-  end
+  end if (pem =~ /---BEGIN CERTIFICATE---/)
+  #Tell Linux PKI about the certs
+  file "/etc/pki/ca-trust/source/anchors/#{fqdn}.pem" do
+    content pem
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end if (pem =~ /---BEGIN CERTIFICATE---/)
 end
+
+# This is for RHEL/CentOS to pick up certs from PKI
+#update_certs = Mixlib::ShellOut.new("update-ca-trust")
+#update_certs.run_command
 
 # Lay down delivery-cmd which gets executed by PUSHY when a job needs running
 template '/var/opt/delivery/workspace/bin/delivery-cmd' do
