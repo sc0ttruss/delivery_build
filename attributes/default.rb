@@ -27,6 +27,6 @@ default['delivery_build']['secrets_type'] = "vault"
 default['delivery_build']['secrets_source'] = "delivery_secrets_vault"
 default['delivery_build']['chef_username'] = "delivery"
 
-# Delivery and SUpermarket URL's to retrieve their certificates
-default['delivery_build']['delivery_url'] = 'google.co.uk'
-default['delivery_build']['supermarket_url'] = 'google.co.uk'
+# Add FQDN's of any SSL sites the builder needs to talk to that have untrusted certs
+# Typically this would include your Delivery and Supermarket servers
+default['delivery_build']['trusted_certs'] = ['github.com','bitbucket.org']
