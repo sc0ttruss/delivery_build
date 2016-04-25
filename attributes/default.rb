@@ -30,7 +30,3 @@ default['delivery_build']['chef_username'] = "delivery"
 # Delivery and SUpermarket URL's to retrieve their certificates
 default['delivery_build']['delivery_url'] = 'google.co.uk'
 default['delivery_build']['supermarket_url'] = 'google.co.uk'
-
-# this specifically targets the /etc/chef/push-jobs-client.rb file
-default['delivery_build']['chef_server_url'] = Chef::Config.chef_server_url
-default['delivery_build']['builder_node_url'] = Chef::Config.node_name
