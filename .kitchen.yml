@@ -39,16 +39,11 @@ platforms:
 
 suites:
   - name: default
-    #data_bag_path: "/Users/srussell/Source/Testkitchen/Oracle/data_bags"
+    data_bag_path: "test/integration/data_bags"
     run_list:
       - recipe[delivery_build::default]
     attributes:
-      myapache-cookbook:
-        ap_path: /mnt/share/gems/awesome_print-1.6.1.gem
-        git-repo: https://github.com/alexpop/myhtml-app
-        git-revision: release-1
-        doc-root: /var/www/html
-      data_bag:
-        name: ssl
-        item: ssl_opschef_tv
-        secret: superSECRETencryptionKEY
+      delivery_build:
+        secrets_type: "databag"
+        secrets_source: "delivery_secrets"
+        use_package_manager: false
