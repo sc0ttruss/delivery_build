@@ -32,5 +32,5 @@ default['delivery_build']['delivery_url'] = 'google.co.uk'
 default['delivery_build']['supermarket_url'] = 'google.co.uk'
 
 # this specifically targets the /etc/chef/push-jobs-client.rb file
-default['delivery_build']['chef_server_url'] = 'https://chef.myorg.chefdemo.net/organizations/myorg'
-default['delivery_build']['builder_node_url'] = 'builder1.myorg.chefdemo.net'
+default['delivery_build']['chef_server_url'] = Chef::Config.chef_server_url
+default['delivery_build']['builder_node_url'] = Chef::Config.node_name
