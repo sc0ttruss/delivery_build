@@ -148,45 +148,7 @@ file '/var/opt/delivery/workspace/etc/delivery-git-ssh-known-hosts' do
 end
 
 # Lay down the builder credentials
-
-remote_file "/var/opt/delivery/workspace/etc/#{node['delivery_build']['delivery_user_private_key']}" do
-  # source 'http://myfile'
-  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['delivery_user_private_key']}"
-  owner 'dbuild'
-  group 'root'
-  mode 00644
-  # checksum 'abc123'
-end
-
-remote_file "/var/opt/delivery/workspace/.chef/#{node['delivery_build']['delivery_user_private_key']}" do
-  # source 'http://myfile'
-  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['delivery_user_private_key']}"
-  owner 'dbuild'
-  group 'root'
-  mode 00644
-  # checksum 'abc123'
-end
-
-# Copy the builder SSH private key generated on the delivery server
-# during creation of the enterprise to the following locations
-
-remote_file "/var/opt/delivery/workspace/etc/#{node['delivery_build']['builder_user_private_key']}" do
-  # source 'http://myfile'
-  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['builder_user_private_key']}"
-  owner 'dbuild'
-  group 'root'
-  mode 00644
-  # checksum 'abc123'
-end
-
-remote_file "/var/opt/delivery/workspace/.chef/#{node['delivery_build']['builder_user_private_key']}" do
-  # source 'http://myfile'
-  source "#{node['delivery_build']['base_filename_url']}/#{node['delivery_build']['builder_user_private_key']}"
-  owner 'dbuild'
-  group 'root'
-  mode 00644
-  # checksum 'abc123'
-end
+include_recipe "delivery_build::credentials"
 # Lay down the builder knife.rb/delivery.rb
 
 template '/var/opt/delivery/workspace/etc/delivery.rb' do
@@ -242,12 +204,19 @@ end
 # The dbuild user needs access to some stuff in /etc/chef
 # which is normally only available to root
 
-directory '/etc/chef' do
-  owner 'root'
-  group 'root'
-  mode 00755
-  action :create
-end
+# This was done earlier in the recipe so dont do it again
+# directory '/etc/chef' do
+#   owner 'root'
+#   group 'root'
+#   mode 00755
+#   action :create
+# end
+# directory '/etc/chef/trusted_certs' do
+#   owner 'root'
+#   group 'root'
+#   mode 00755
+#   action :create
+# end
 
 file '/etc/chef/client.rb' do
   owner 'root'
@@ -256,12 +225,6 @@ file '/etc/chef/client.rb' do
   action :create
 end
 
-directory '/etc/chef/trusted_certs' do
-  owner 'root'
-  group 'root'
-  mode 00755
-  action :create
-end
 
 # Chef does not support recursive chmod, so we do it using bash
 

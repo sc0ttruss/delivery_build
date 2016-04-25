@@ -47,3 +47,4 @@ suites:
         secrets_type: "databag"
         secrets_source: "delivery_secrets"
         use_package_manager: false
+        chef_username: srv-delivery"
