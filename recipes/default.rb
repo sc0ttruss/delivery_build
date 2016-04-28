@@ -175,17 +175,37 @@ directory '/etc/chef/trusted_certs' do
   action :create
 end
 
-bash 'copy across the Delivery and Supermarket SSL certificates' do
-  user 'root'
-  cwd '/var/tmp'
-  code <<-EOH
-  openssl s_client -showcerts -connect #{node['delivery_build']['delivery_url']}:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/#{node['delivery_build']['delivery_url']}
-  openssl s_client -showcerts -connect #{node['delivery_build']['supermarket_url']}:443 </dev/null 2> /dev/null| openssl x509 -outform PEM > /etc/chef/trusted_certs/#{node['delivery_build']['supermarket_url']}
-  EOH
+# Grab all the required "TRUSTED" certs. These are mainly self signed certs
+# andcerts which are signed using modern CA's that haven't made it into common
+# Linux distros yet.
+require 'httpclient'
+http_client=HTTPClient.new
+http_client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+node.delivery_build.trusted_certs.each do |fqdn|
+  response=http_client.get("https://#{fqdn}")
+  pem=response.peer_cert.to_pem
+  #Drop the ert in trusted certs
+  file "/etc/chef/trusted_certs/#{fqdn}.crt" do
+    content pem
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end if (pem =~ /---BEGIN CERTIFICATE---/)
+  #Tell Linux PKI about the certs
+  file "/etc/pki/ca-trust/source/anchors/#{fqdn}.pem" do
+    content pem
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end if (pem =~ /---BEGIN CERTIFICATE---/)
 end
 
-# Lay down delivery-cmd and git_ssh scripts
+# This is for RHEL/CentOS to pick up certs from PKI
+#update_certs = Mixlib::ShellOut.new("update-ca-trust")
+#update_certs.run_command
 
+# Lay down delivery-cmd which gets executed by PUSHY when a job needs running
 template '/var/opt/delivery/workspace/bin/delivery-cmd' do
   source 'delivery-cmd.erb'
   owner 'root'
@@ -193,6 +213,8 @@ template '/var/opt/delivery/workspace/bin/delivery-cmd' do
   mode 00755
 end
 
+# This is a wrapper around SSH to stop problems like untrusted host keys
+# messing up git stuff
 template '/var/opt/delivery/workspace/bin/git_ssh' do
   source 'git_ssh.erb'
   owner 'root'
@@ -200,38 +222,10 @@ template '/var/opt/delivery/workspace/bin/git_ssh' do
   mode 00755
 end
 
-# Set /etc/chef permissions
-# The dbuild user needs access to some stuff in /etc/chef
-# which is normally only available to root
-
-# This was done earlier in the recipe so dont do it again
-# directory '/etc/chef' do
-#   owner 'root'
-#   group 'root'
-#   mode 00755
-#   action :create
-# end
-# directory '/etc/chef/trusted_certs' do
-#   owner 'root'
-#   group 'root'
-#   mode 00755
-#   action :create
-# end
-
+# Make sure dbuild can read the chef client config
 file '/etc/chef/client.rb' do
   owner 'root'
   group 'root'
   mode 00755
   action :create
-end
-
-
-# Chef does not support recursive chmod, so we do it using bash
-
-bash 'chmod all files in directory for dbuild user' do
-  user 'root'
-  cwd '/var/tmp'
-  code <<-EOH
-  chmod 644 /etc/chef/trusted_certs/*
-  EOH
 end
