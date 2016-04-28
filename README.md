@@ -27,8 +27,8 @@ default['delivery_build']['chef_username']  = "svc-delivery"
 
 ```ruby
 # Delivery and SUpermarket URL's to retrieve their certificates
-default['delivery_build']['delivery_url']    = 'https://delivery.chefdemo.net'
-default['delivery_build']['supermarket_url'] = 'https://supermarket.chefdemo.net'
+default['delivery_build']['url']['delivery']    = 'https://delivery.chefdemo.net'
+default['delivery_build']['url']['supermarket'] = 'https://supermarket.chefdemo.net'
 ```
 
 # Creating the credentials Vault/Bag

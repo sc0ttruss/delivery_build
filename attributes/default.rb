@@ -5,6 +5,7 @@
 # You can also replae file:// with https:// for remote repos.
 default['delivery_build']['use_package_manager'] = false
 default['delivery_build']['base_package_url'] = 'file:///mnt/share/chef'
+# assume this node has alredy been bootstrapped
 default['delivery_build']['chef_url'] = "#{Chef::Config.chef_server_url}"
 # note the package "name" must match the name used by yum/rpm etc.
 # get your package list here https://packages.chef.io/stable/el/7/
@@ -28,6 +29,6 @@ default['delivery_build']['secrets_type'] = "vault"
 default['delivery_build']['secrets_source'] = "delivery_secrets_vault"
 default['delivery_build']['chef_username'] = "delivery"
 
-# Add FQDN's of any SSL sites the builder needs to talk to that have untrusted certs
-# Typically this would include your Delivery and Supermarket servers
-default['delivery_build']['trusted_certs'] = ['github.com','bitbucket.org']
+# Delivery and SUpermarket URL's to retrieve their certificates
+default['delivery_build']['url']['delivery'] = 'google.com'
+default['delivery_build']['url']['supermarket'] = 'google.com'

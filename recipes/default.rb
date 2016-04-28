@@ -178,32 +178,30 @@ end
 # Grab all the required "TRUSTED" certs. These are mainly self signed certs
 # andcerts which are signed using modern CA's that haven't made it into common
 # Linux distros yet.
-require 'httpclient'
-http_client=HTTPClient.new
-http_client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-node.delivery_build.trusted_certs.each do |fqdn|
-  response=http_client.get("https://#{fqdn}")
-  pem=response.peer_cert.to_pem
-  #Drop the ert in trusted certs
-  file "/etc/chef/trusted_certs/#{fqdn}.crt" do
-    content pem
-    owner 'root'
-    group 'root'
-    mode '0644'
-  end if (pem =~ /---BEGIN CERTIFICATE---/)
-  #Tell Linux PKI about the certs
-  file "/etc/pki/ca-trust/source/anchors/#{fqdn}.pem" do
-    content pem
-    owner 'root'
-    group 'root'
-    mode '0644'
-  end if (pem =~ /---BEGIN CERTIFICATE---/)
+node['delivery_build']['url'].each do |_name, url|
+  bash 'retreive the ssl certs for both servers' do
+    user 'root'
+    # cwd '/etc/chef/trusted_certs/'
+    code <<-EOH
+    # cd /etc/chef/trusted_certs/
+    knife ssl fetch https://#{url}
+    EOH
+    # not_if { ::File.exist? "/etc/chef/trusted_certs/#{url}.crt" }
+  end
 end
 
-# This is for RHEL/CentOS to pick up certs from PKI
-#update_certs = Mixlib::ShellOut.new("update-ca-trust")
-#update_certs.run_command
+# this is a brute force copy with no checks due to
+# the entire cert chain is required every time
+
+bash 'copy certificates to two locations' do
+  user 'root'
+  # cwd '/etc/chef/trusted_certs/'
+  code <<-EOH
+  cp /root/.chef/trusted_certs/*.crt /etc/chef/trusted_certs/
+  cp /root/.chef/trusted_certs/*.crt /etc/pki/ca-trust/source/anchors/
+  EOH
+end
 
 # Lay down delivery-cmd which gets executed by PUSHY when a job needs running
 template '/var/opt/delivery/workspace/bin/delivery-cmd' do

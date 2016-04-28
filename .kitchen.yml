@@ -49,3 +49,5 @@ suites:
         use_package_manager: false
         chef_username: "srv-delivery"
         chef_url: 'https://chef.myorg.chefdemo.net'
+        delivery_url: 'https://delivery.myorg.chefdemo.net'
+        supermarket_url: 'https://supermarket.myorg.chefdemo.net'
