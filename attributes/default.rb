@@ -5,6 +5,7 @@
 # You can also replae file:// with https:// for remote repos.
 default['delivery_build']['use_package_manager'] = false
 default['delivery_build']['base_package_url'] = 'file:///mnt/share/chef'
+default['delivery_build']['chef_url'] = "#{Chef::Config.chef_server_url}"
 # note the package "name" must match the name used by yum/rpm etc.
 # get your package list here https://packages.chef.io/stable/el/7/
 default['delivery_build']['packages']['chefdk'] = 'chefdk-0.12.0-1.el7.x86_64.rpm'

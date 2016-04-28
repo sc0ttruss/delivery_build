@@ -1,7 +1,7 @@
 LC_ALL='en_US.UTF-8'
 
 # Chef server connect options
-chef_server_url   '<%=Chef::Config.chef_server_url%>'
+chef_server_url   "<%=node['delivery_build']['chef_url']%>
 node_name         '<%=Chef::Config.node_name%>'
 client_key        '/etc/chef/client.pem'
 trusted_certs_dir '/etc/chef/trusted_certs'
