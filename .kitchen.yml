@@ -48,6 +48,10 @@ suites:
         secrets_source: "delivery_secrets"
         use_package_manager: false
         chef_username: "srv-delivery"
-        chef_url: 'https://chef.myorg.chefdemo.net'
-        delivery_url: 'https://delivery.myorg.chefdemo.net'
-        supermarket_url: 'https://supermarket.myorg.chefdemo.net'
+        url_chef: 'https://chef.myorg.chefdemo.net'
+        url:
+          chef: 'chef.myorg.chefdemo.net'
+          delivery: 'delivery.myorg.chefdemo.net'
+          supermarket: 'supermarket.myorg.chefdemo.net'
+# the https is needed for the chef server url, to be used
+# in the push-jobs-client.rb
