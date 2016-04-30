@@ -18,6 +18,11 @@ case node['delivery_build']['secrets_type']
     secrets = DataBagItem.load(node.delivery_build.secrets_source,"delivery_secrets")
   when "encrypted_databag","encrypted_data_bag"
     secrets = EncryptedDataBagItem.load(node.delivery_build.secrets_source,"delivery_secrets")
+  when "local-files"
+    delivery_pem_content = (File.read('/mnt/share/chef/delivery.pem' ))
+    builder_key_content = (File.read('/mnt/share/chef/builder_key' ))
+    user_content = "#{node.delivery_build.chef_username}"
+    secrets = {delivery_pem: delivery_pem_content, builder_key: builder_key_content,  user: user_content}
   else
     Chef::Log.fatal "Must set attribute default['delivery_build']['secrets_type'] to vault, databag or encrypted_databag"
 end
