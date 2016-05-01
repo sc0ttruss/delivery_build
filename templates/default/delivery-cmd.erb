@@ -104,7 +104,7 @@ job_data = Chef::JSONCompat.from_json(raw_json)
 
 builder_auth_headers = Delivery::JobHelpers.builder_auth_headers(job_data)
 
-rest = Chef::REST.new(job_data["delivery_api_url"])
+rest = Chef::ServerAPI.new(job_data["delivery_api_url"])
 path = File.join(job_data['enterprise'],
                  'orgs', job_data['organization'],
                  'projects', job_data['project'],
