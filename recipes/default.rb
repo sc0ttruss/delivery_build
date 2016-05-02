@@ -169,6 +169,21 @@ template '/var/opt/delivery/workspace/.chef/delivery.rb' do
   mode 00644
 end
 
+template '/var/opt/delivery/workspace/etc/knife.rb' do
+  source 'knife.rb.erb'
+  owner 'dbuild'
+  group 'root'
+  mode 00644
+end
+
+template '/var/opt/delivery/workspace/.chef/knife.rb' do
+  source 'knife.rb.erb'
+  owner 'dbuild'
+  group 'root'
+  mode 00644
+end
+
+
 # Trust the Delivery and Supermarket SSL certificate
 
 directory '/etc/chef/trusted_certs' do
