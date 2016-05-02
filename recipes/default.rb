@@ -120,6 +120,10 @@ unless node['delivery_build']['linux_user_based_ldap']
     home node['delivery_build']['home']
     shell '/bin/bash'
   end
+   group node['delivery_build']['group'] do
+     members [node['delivery_build']['user']]
+     action :create
+   end
 end
 
 %w(bin etc lib).each do |dir|

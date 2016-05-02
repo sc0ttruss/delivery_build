@@ -19,6 +19,9 @@ default['delivery_build']['user'] = 'dbuild'
 default['delivery_build']['uid'] = '7100'
 default['delivery_build']['gid'] = 'users'
 default['delivery_build']['home'] = '/var/opt/delivery/workspace'
+# dbuild group needs to exist, as the build node will chown some directories
+# with this group id, during pipeline execution
+default['delivery_build']['group'] = 'dbuild'
 # Load up the builder private ssh key and the chef delivery user's pem key
 default['delivery_build']['base_filename_url'] = 'file:///mnt/share/chef/'
 
