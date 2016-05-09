@@ -213,12 +213,16 @@ end
 # this is a brute force copy with no checks due to
 # the entire cert chain is required every time
 
-bash 'copy certificates to two locations' do
+# note putting all the certs into the cacerts.pem for chefdk
+# is a bit brute force, as really on the chef server
+# certificate is required.
+bash 'copy certificates to three locations' do
   user 'root'
   # cwd '/etc/chef/trusted_certs/'
   code <<-EOH
   cp /root/.chef/trusted_certs/*.crt /etc/chef/trusted_certs/
   cp /root/.chef/trusted_certs/*.crt /etc/pki/ca-trust/source/anchors/
+  cat /root/.chef/trusted_certs/*.crt >> /opt/chefdk/embedded/ssl/certs/cacert.pem
   EOH
 end
 
