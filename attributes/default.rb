@@ -31,6 +31,7 @@ default['delivery_build']['secrets_source'] = "delivery_secrets_vault"
 default['delivery_build']['chef_username'] = "delivery"
 
 # Delivery and SUpermarket URL's to retrieve their certificates
+default['delivery_build']['url']['chef'] = 'google.com'
 default['delivery_build']['url']['delivery'] = 'google.com'
 default['delivery_build']['url']['supermarket'] = 'google.com'
 
