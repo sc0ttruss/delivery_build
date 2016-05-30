@@ -35,7 +35,7 @@ platforms:
       #box_url: file:///Users/srussell/Source//Pushjobs/opscode_centos-6.6_chef-provisionerless.box
       # Use the default host-only network along the NAT one. Makes life easier from a networking perspective
       network:
-      - ['private_network', {ip: '192.168.56.47'}]
+      - ['private_network', {ip: '192.168.56.46'}]
 
 suites:
   - name: default
