@@ -28,12 +28,12 @@ default['delivery_build']['base_filename_url'] = 'file:///mnt/share/chef/'
 # Stuff related to credentials
 default['delivery_build']['secrets_type'] = "vault"
 default['delivery_build']['secrets_source'] = "delivery_secrets_vault"
-default['delivery_build']['chef_username'] = "delivery"
+default['delivery_build']['chef_username'] = "srv-delivery"
 
 # Delivery and SUpermarket URL's to retrieve their certificates
 default['delivery_build']['url']['chef'] = 'google.com'
 default['delivery_build']['url']['delivery'] = 'google.com'
 default['delivery_build']['url']['supermarket'] = 'google.com'
-
+default['delivery_build']['organisation'] = 'myorg'
 # assume this node has alredy been bootstrapped
 default['delivery_build']['url_chef']  = "#{Chef::Config.chef_server_url}"

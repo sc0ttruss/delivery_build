@@ -250,3 +250,35 @@ file '/etc/chef/client.rb' do
   mode 00755
   action :create
 end
+
+# Make sure dbuild can read the chef client config
+file 'ENV[HOME]/.gemrc' do
+  content ::File.open("/etc/gemrc").read
+  owner 'dbuild'
+  group 'dbuild'
+  mode 00644
+  action :create
+end
+
+# this is required for delivery_truck Cookbook
+chef_gem 'knife-supermarket' do
+  gem_binary "/opt/chefdk/embedded/bin/gem"
+  options "--no-user-install"
+  action :install
+end
+
+# Richard wrote this, and thinks its kool
+chef_gem 'knife-pinnings' do
+  gem_binary "/opt/chefdk/embedded/bin/gem"
+  options "--no-user-install"
+  action :install
+end
+
+# Create a symlink for the users home directory
+if node['delivery_build']['linux_user_based_ldap']
+  link '/home/dbuild' do
+    to '/var/opt/delivery/workspace'
+    owner 'dbuild'
+    action :create
+  end
+end

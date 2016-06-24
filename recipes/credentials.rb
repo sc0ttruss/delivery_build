@@ -4,6 +4,7 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
+secrets = {}
 
 # Grab the secrets from a vault or data bag
 case node['delivery_build']['secrets_type']
@@ -19,7 +20,7 @@ case node['delivery_build']['secrets_type']
   when "encrypted_databag","encrypted_data_bag"
     secrets = EncryptedDataBagItem.load(node.delivery_build.secrets_source,"delivery_secrets")
   when "local-files"
-    delivery_pem_content = (File.read('/mnt/share/chef/delivery.pem' ))
+    delivery_pem_content = (File.read('/mnt/share/chef/srv-delivery.pem' ))
     builder_key_content = (File.read('/mnt/share/chef/builder_key' ))
     user_content = "#{node.delivery_build.chef_username}"
     secrets = {delivery_pem: delivery_pem_content, builder_key: builder_key_content,  user: user_content}
@@ -30,15 +31,18 @@ end
 # This is the PEM generated when we registered the delivery user
 # on the chef server. It must be an admin for the Chef Org
 
-file "#{node.delivery_build.home}/etc/delivery.pem" do
-  content secrets['delivery_pem']
+Chef::Log.fatal "must be Scotts variables" if secrets.nil?
+Chef::Log.info secrets.inspect
+
+file "#{node.delivery_build.home}/etc/srv-delivery.pem" do
+  content secrets[:delivery_pem]
   owner 'dbuild'
   group 'root'
   mode 00644
 end
 
-file "#{node.delivery_build.home}/.chef/delivery.pem" do
-  content secrets['delivery_pem']
+file "#{node.delivery_build.home}/.chef/srv-delivery.pem" do
+  content secrets[:delivery_pem]
   owner 'dbuild'
   group 'root'
   mode 00644
@@ -49,14 +53,14 @@ end
 # and to remotely log into nodes for serverspec/inspec tests.
 
 file "#{node.delivery_build.home}/etc/builder_key" do
-  content secrets['builder_key']
+  content secrets[:builder_key]
   owner 'dbuild'
   group 'root'
   mode 00644
 end
 
 file "#{node.delivery_build.home}/.chef/builder_key" do
-  content secrets['builder_key']
+  content secrets[:builder_key]
   owner 'dbuild'
   group 'root'
   mode 00644

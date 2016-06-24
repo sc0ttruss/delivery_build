@@ -2,5 +2,5 @@ current_dir = File.dirname(__FILE__)
 eval(IO.read('/etc/chef/client.rb'))
 log_location STDOUT
 node_name "<%=node['delivery_build']['chef_username']%>"
-client_key "#{current_dir}/delivery.pem"
+client_key "#{current_dir}/srv-delivery.pem"
 trusted_certs_dir "/etc/chef/trusted_certs"
