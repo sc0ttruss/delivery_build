@@ -20,9 +20,9 @@ describe 'delivery_build::credentials' do
       expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/builder_key').with_content("an ssh key")
       expect(@runner).to create_file('/var/opt/delivery/workspace/etc/builder_key').with_content("an ssh key")
     end
-    it "writes the delivery.pem out to the delivery workspace" do
-      expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/delivery.pem').with_content("a delivery pem")
-      expect(@runner).to create_file('/var/opt/delivery/workspace/etc/delivery.pem').with_content("a delivery pem")
+    it "writes the srv-delivery.pem out to the delivery workspace" do
+      expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/srv-delivery.pem').with_content("a delivery pem")
+      expect(@runner).to create_file('/var/opt/delivery/workspace/etc/srv-delivery.pem').with_content("a delivery pem")
     end
   end
 
@@ -46,9 +46,9 @@ describe 'delivery_build::credentials' do
       expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/builder_key').with_content("an ssh key")
       expect(@runner).to create_file('/var/opt/delivery/workspace/etc/builder_key').with_content("an ssh key")
     end
-    it "writes the delivery.pem out to the delivery workspace" do
-      expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/delivery.pem').with_content("a delivery pem")
-      expect(@runner).to create_file('/var/opt/delivery/workspace/etc/delivery.pem').with_content("a delivery pem")
+    it "writes the srv-delivery.pem out to the delivery workspace" do
+      expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/srv-delivery.pem').with_content("a delivery pem")
+      expect(@runner).to create_file('/var/opt/delivery/workspace/etc/srv-delivery.pem').with_content("a delivery pem")
     end
   end
 
@@ -71,9 +71,9 @@ describe 'delivery_build::credentials' do
       expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/builder_key').with_content("an ssh key")
       expect(@runner).to create_file('/var/opt/delivery/workspace/etc/builder_key').with_content("an ssh key")
     end
-    it "writes the delivery.pem out to the delivery workspace" do
+    it "writes the srv-delivery.pem out to the delivery workspace" do
       expect(@runner).to create_file('/var/opt/delivery/workspace/.chef/delivery.pem').with_content("a delivery pem")
-      expect(@runner).to create_file('/var/opt/delivery/workspace/etc/delivery.pem').with_content("a delivery pem")
+      expect(@runner).to create_file('/var/opt/delivery/workspace/etc/srv-srv-delivery.pem').with_content("a delivery pem")
     end
   end
 
