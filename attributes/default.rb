@@ -7,8 +7,7 @@ default['delivery_build']['use_package_manager'] = false
 default['delivery_build']['base_package_url'] = 'file:///mnt/share/chef'
 # note the package "name" must match the name used by yum/rpm etc.
 # get your package list here https://packages.chef.io/stable/el/7/
-default['delivery_build']['packages']['chefdk'] = 'chefdk-0.12.0-1.el7.x86_64.rpm'
-default['delivery_build']['packages']['delivery-cli'] ='delivery-cli-20160317163950-1.el6.x86_64.rpm'
+default['delivery_build']['packages']['chefdk'] = 'chefdk-0.15.15-1.el7.x86_64.rpm'
 default['delivery_build']['packages']['push-jobs-client'] ='push-jobs-client-1.3.4-1.el7.x86_64.rpm'
 default['delivery_build']['packages']['runit'] ='runit-2.1.2-3.el7.centos.x86_64.rpm'
 # add the delivery local user on the box

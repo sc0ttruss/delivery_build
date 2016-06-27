@@ -64,7 +64,6 @@ Packages for creating a private repo can be obtained from:-
 If using the OS package manager please ensure you have a repo configured which contains the following packages:-
 
 * chefdk
-* delivery-cli
 * push-jobs-client
 * runit
 * git
@@ -75,7 +74,6 @@ If using remote file download instead of the OS package manager, we need to know
 
 ```ruby
 default['delivery_build']['packages']['chefdk'] = 'chefdk-0.12.0-1.el7.x86_64.rpm'
-default['delivery_build']['packages']['delivery-cli'] ='delivery-cli-20160317163950-1.el6.x86_64.rpm'
 default['delivery_build']['packages']['push-jobs-client'] ='push-jobs-client-1.3.4-1.el7.x86_64.rpm'
 default['delivery_build']['packages']['runit'] ='runit-2.1.2-3.el7.centos.x86_64.rpm'
 ```

@@ -8,8 +8,7 @@ require 'spec_helper'
 
 # This is the current list of packages we expect to be installed
 packages = {
-  'chefdk' => 'chefdk-0.12.0-1.el7.x86_64.rpm',
-  'delivery-cli' => 'delivery-cli-20160317163950-1.el6.x86_64.rpm',
+  'chefdk' => 'chefdk-0.15.15-1.el7.x86_64.rpm',
   'push-jobs-client' => 'push-jobs-client-1.3.4-1.el7.x86_64.rpm',
   'runit' => 'runit-2.1.2-3.el7.centos.x86_64.rpm'
 }

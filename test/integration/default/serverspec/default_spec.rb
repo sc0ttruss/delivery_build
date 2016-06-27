@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-packages = ['chefdk','delivery-cli','push-jobs-client','runit']
+packages = ['chefdk','push-jobs-client','runit']
 
 describe 'delivery_build::default' do
 
