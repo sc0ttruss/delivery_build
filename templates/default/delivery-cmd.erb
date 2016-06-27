@@ -143,7 +143,7 @@ streamy << "Starting job on builder #{client.node_name} at #{start_datetime.iso8
 ## This we will want to be configurable. but for now make it big and
 ## and rely on pushy to timeout.
 cmd.timeout = 6600
-cmd.log_level = :error
+cmd.log_level = :info
 cmd.live_stream = streamy
 cmd.cwd = workspace_root
 cmd.run_command
