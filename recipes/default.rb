@@ -251,7 +251,7 @@ file '/etc/chef/client.rb' do
   action :create
 end
 
-template 'ENV[HOME]/.gemrc' do
+template '/etc/gemrc' do
   source 'gemrc.erb'
   owner 'root'
   group 'root'
