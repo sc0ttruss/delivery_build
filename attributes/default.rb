@@ -36,3 +36,5 @@ default['delivery_build']['url']['supermarket'] = 'google.com'
 default['delivery_build']['organisation'] = 'myorg'
 # assume this node has alredy been bootstrapped
 default['delivery_build']['url_chef']  = "#{Chef::Config.chef_server_url}"
+# set the default source for gems packages
+default['delivery_build']['gemrc_source'] = 'http://gems.rubyforge.org'

@@ -251,7 +251,16 @@ file '/etc/chef/client.rb' do
   action :create
 end
 
-# Make sure dbuild can read the chef client config
+template 'ENV[HOME]/.gemrc' do
+  source 'gemrc.erb'
+  owner 'root'
+  group 'root'
+  mode 00744
+  action :create
+end
+
+
+# Make sure dbuild user can read the gemrc file locally
 file 'ENV[HOME]/.gemrc' do
   content ::File.open("/etc/gemrc").read
   owner 'dbuild'
