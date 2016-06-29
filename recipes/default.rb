@@ -255,14 +255,12 @@ template '/etc/gemrc' do
   source 'gemrc.erb'
   owner 'root'
   group 'root'
-  mode 00744
-  action :create
+  mode 00755
 end
-
 
 # Make sure dbuild user can read the gemrc file locally
 file 'ENV[HOME]/.gemrc' do
-  content ::File.open("/etc/gemrc").read
+  content ::File.open('/etc/gemrc').read
   owner 'dbuild'
   group 'dbuild'
   mode 00644
@@ -271,8 +269,8 @@ end
 
 # this is required for delivery_truck Cookbook
 chef_gem 'knife-supermarket' do
-  gem_binary "/opt/chefdk/embedded/bin/gem"
-  options "--no-user-install"
+  gem_binary '/opt/chefdk/embedded/bin/gem'
+  options '--no-user-install'
   action :install
 end
 
