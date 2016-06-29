@@ -258,9 +258,11 @@ template '/etc/gemrc' do
   mode 00755
 end
 
+gemcontent = ::File.open('/etc/gemrc').read
 # Make sure dbuild user can read the gemrc file locally
 file 'ENV[HOME]/.gemrc' do
-  content ::File.open('/etc/gemrc').read
+  # content ::File.open('/etc/gemrc').read
+  content lazy { "#{gemcontent}" }
   owner 'dbuild'
   group 'dbuild'
   mode 00644
