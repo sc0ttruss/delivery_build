@@ -258,10 +258,24 @@ template '/etc/gemrc' do
   mode 00755
 end
 
-gemcontent = ::File.open('/etc/gemrc').read
+ruby_block 'desc' do
+  block do
+    puts 'awesome'
+  end
+end
+
+# defind gemcontent here so it is in scope, and
+# put it into a ruby block so it will wait till
+# the file is created.
+gemcontent = {}
 # Make sure dbuild user can read the gemrc file locally
-file 'ENV[HOME]/.gemrc' do
-  # content ::File.open('/etc/gemrc').read
+ruby_block 'fetch_gemrc_once_created' do
+  block do
+    gemcontent = ::File.open('/etc/gemrc').read
+  end
+end
+
+file "#{node['delivery_build']['home']}/.gemrc" do
   content lazy { "#{gemcontent}" }
   owner 'dbuild'
   group 'dbuild'
@@ -269,15 +283,26 @@ file 'ENV[HOME]/.gemrc' do
   action :create
 end
 
+# hard set the .gemrc file for root, as it is used by chefclient a lot
+file "/root/.gemrc" do
+  content lazy { "#{gemcontent}" }
+  owner 'root'
+  group 'root'
+  mode 00644
+  action :create
+end
+
+
 # this is required for delivery_truck Cookbook
-chef_gem 'knife-supermarket' do
+# chef_gem 'knife-supermarket' do
+gem_package 'knife-supermarket' do
   gem_binary '/opt/chefdk/embedded/bin/gem'
   options '--no-user-install'
   action :install
 end
 
 # Richard wrote this, and thinks its kool
-chef_gem 'knife-pinnings' do
+gem_package 'knife-pinnings' do
   gem_binary "/opt/chefdk/embedded/bin/gem"
   options "--no-user-install"
   action :install
